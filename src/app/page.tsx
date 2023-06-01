@@ -30,7 +30,7 @@ export default function App() {
         const result = await fetch(`/getSong?url=${url}`);
         setLoading(false);
         if (!result.ok) {
-            setError('Error');
+            setError(`Error: ${await result.text()}`);
             return;
         }
         const { title, author, cover } = await result.json();
