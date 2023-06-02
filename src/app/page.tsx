@@ -27,14 +27,23 @@ export default function App() {
             return;
         }
         setLoading(true);
-        const result = await fetch(`/getSong?url=${url}`);
-        setLoading(false);
+        const result = await fetch(`/getSong?url=${url}`).catch(() => {
+            setLoading(false);
+            setError('Network error');
+        });
+        if (!result) return;
         if (!result.ok) {
-            setError(`Error: ${await result.text()}`);
+            setError(
+                `Error: ${result.status} ${
+                    result.statusText
+                } - ${await result.text()}`
+            );
+            setLoading(false);
             return;
         }
         const { title, author, cover } = await result.json();
         setSong({ title, author, cover });
+        setLoading(false);
     };
 
     return (
