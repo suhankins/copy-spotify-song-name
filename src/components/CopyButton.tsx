@@ -11,6 +11,7 @@ export function CopyButton({ text }: { text: string }) {
 
     return (
         <button
+            aria-label="Copy to clipboard"
             type="button"
             className="copy-button"
             onClick={() => {
