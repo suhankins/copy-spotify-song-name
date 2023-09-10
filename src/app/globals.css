@@ -42,13 +42,14 @@ main {
     place-items: center;
     justify-content: center;
     width: 100%;
+    max-width: min(100vw, 50rem);
     height: 100%;
     gap: 1rem;
 }
 
 form {
     padding: 0 1rem;
-    max-width: min(100vw, 50rem);
+    width: 100%;
 }
 
 .input-group {
@@ -135,6 +136,7 @@ form {
 }
 
 .song-card {
+    max-width: 100%;
     background-color: #181818;
     border-radius: 1rem;
     display: flex;
@@ -149,14 +151,16 @@ form {
 }
 
 .song-card__info {
-    padding: 1rem;
+    padding-left: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 0.5rem;
 }
 
-.song-card__info > * {
+.song-card__info * {
+    overflow-wrap: anywhere;
+    max-width: 30rem;
     display: flex;
     place-items: center;
     margin: 0;
