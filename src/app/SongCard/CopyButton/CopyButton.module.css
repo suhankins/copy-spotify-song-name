@@ -23,6 +23,7 @@
 }
 
 .copyButton:hover {
+    border: white 1px solid;
     background-color: rgba(0.2, 0.2, 0.2, 0.3);
     cursor: pointer;
 }
