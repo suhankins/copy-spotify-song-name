@@ -6,6 +6,7 @@ import {
     ArrowPathIcon,
 } from '@heroicons/react/24/outline';
 import { useId, useState } from 'react';
+import { validateUrl } from './validateUrl';
 
 interface Song {
     title: string;
@@ -22,7 +23,7 @@ export default function App() {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (!url || !url.startsWith('https://open.spotify.com/track/')) {
+        if (!url || !validateUrl(url)) {
             setError('Please enter a valid Spotify song URL');
             return;
         }

@@ -1,10 +1,11 @@
 import { NextRequest } from 'next/server';
+import { validateUrl } from '../validateUrl';
 
 export async function GET(request: NextRequest) {
     const params = request.nextUrl.searchParams;
     const url = params.get('url');
 
-    if (!url || !url.startsWith('https://open.spotify.com/track/')) {
+    if (!url || !validateUrl(url)) {
         return new Response('No url provided', { status: 400 });
     }
 
@@ -15,7 +16,7 @@ export async function GET(request: NextRequest) {
     if (!result.ok) {
         return new Response('Request failed, try again later', { status: 500 });
     }
-    
+
     const text = await result.text();
 
     const title = text.match(/(?<=:title" content=")(.*?)(?=")/gm)?.[0];
