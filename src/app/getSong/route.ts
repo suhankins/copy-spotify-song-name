@@ -3,11 +3,14 @@ import { validateUrl } from '../validateUrl';
 
 export async function GET(request: NextRequest) {
     const params = request.nextUrl.searchParams;
-    const url = params.get('url');
+    const urlString = params.get('url');
 
-    if (!url || !validateUrl(url)) {
+    if (!urlString || !validateUrl(urlString)) {
         return new Response('No url provided', { status: 400 });
     }
+
+    const url = new URL(urlString);
+    url.search = ''; // Deleting any tracking params
 
     const result = await fetch(url).catch(
         () => new Response('Request failed, try again later', { status: 500 })
