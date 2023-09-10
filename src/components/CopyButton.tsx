@@ -12,6 +12,7 @@ export function CopyButton({ text }: { text: string }) {
     return (
         <button
             type="button"
+            aria-label={`Copy ${text} to clipboard`}
             className="copy-button"
             onClick={() => {
                 navigator.clipboard.writeText(text);
@@ -20,7 +21,12 @@ export function CopyButton({ text }: { text: string }) {
             }}
         >
             {copied ? (
-                <ClipboardDocumentCheckIcon />
+                <>
+                    <ClipboardDocumentCheckIcon />
+                    <span className="sr-only" aria-live="polite">
+                        Copied!
+                    </span>
+                </>
             ) : (
                 <ClipboardDocumentIcon />
             )}

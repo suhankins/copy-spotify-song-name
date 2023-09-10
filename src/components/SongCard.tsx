@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { CopyButton } from './CopyButton';
 
 export function SongCard({
@@ -10,18 +11,18 @@ export function SongCard({
     artist?: string;
 }) {
     return (
-        <div className="song-card">
+        <article className="song-card" role="region" aria-live="polite">
             <img className="song-card__image" src={imgSrc} alt="Song cover" />
             <div className="song-card__info">
-                <h2 className="song-card__title">
+                <h1 className="song-card__title">
                     <span>{title}</span>
                     <CopyButton text={title} />
-                </h2>
-                <h3 className="song-card__artist">
+                </h1>
+                <h2 className="song-card__artist">
                     <span>{artist}</span>
                     <CopyButton text={artist} />
-                </h3>
+                </h2>
             </div>
-        </div>
+        </article>
     );
 }

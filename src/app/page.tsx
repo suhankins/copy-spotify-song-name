@@ -49,12 +49,13 @@ export default function App() {
 
     return (
         <main>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} role="search">
                 <label className="url-input-label" htmlFor={searchInputId}>
                     Put a Spotify song URL here
                 </label>
                 <div className="input-group">
                     <input
+                        role="searchbox"
                         onInput={(e) => {
                             setUrl(e.currentTarget.value);
                             setError(null);
@@ -78,7 +79,13 @@ export default function App() {
                         {loading ? <ArrowPathIcon /> : <MagnifyingGlassIcon />}
                     </button>
                 </div>
-                <label className="url-input-label">{error}</label>
+                <label
+                    className="url-input-label"
+                    aria-live="polite"
+                    aria-hidden={!error}
+                >
+                    {error}
+                </label>
             </form>
             <SongCard
                 imgSrc={song?.cover}
