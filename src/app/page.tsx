@@ -1,6 +1,6 @@
 'use client';
 
-import { SongCard } from '@/components/SongCard';
+import { SongCard } from '@/app/SongCard/SongCard';
 import {
     MagnifyingGlassIcon,
     ArrowPathIcon,

@@ -5,6 +5,7 @@ import {
     ClipboardDocumentCheckIcon,
 } from '@heroicons/react/24/outline';
 import { useState } from 'react';
+import styles from './CopyButton.module.css';
 
 export function CopyButton({ text }: { text: string }) {
     const [copied, setCopied] = useState(false);
@@ -13,7 +14,7 @@ export function CopyButton({ text }: { text: string }) {
         <button
             type="button"
             aria-label={`Copy ${text} to clipboard`}
-            className="copy-button"
+            className={styles.copyButton}
             onClick={() => {
                 navigator.clipboard.writeText(text);
                 setCopied(true);
