@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server';
 import { validateUrl } from '../validateUrl';
+import he from 'he';
 
 export async function GET(request: NextRequest) {
     const params = request.nextUrl.searchParams;
@@ -32,5 +33,11 @@ export async function GET(request: NextRequest) {
         return new Response('Invalid URL', { status: 400 });
     }
 
-    return new Response(JSON.stringify({ title, author, cover }));
+    return new Response(
+        JSON.stringify({
+            title: he.decode(title),
+            author: he.decode(author),
+            cover,
+        })
+    );
 }
