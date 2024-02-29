@@ -5,7 +5,7 @@ import {
     MagnifyingGlassIcon,
     ArrowPathIcon,
 } from '@heroicons/react/24/outline';
-import { useId, useState } from 'react';
+import { useCallback, useEffect, useId, useState } from 'react';
 import { validateUrl } from './validateUrl';
 
 interface Song {
@@ -21,35 +21,54 @@ export default function App() {
     const [error, setError] = useState<string | null>(null);
     const [song, setSong] = useState<Song | null>(null);
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (!url || !validateUrl(url)) {
-            setError('Please enter a valid Spotify song URL');
-            return;
-        }
-        setLoading(true);
-        const result = await fetch(`/getSong?url=${url}`).catch(() => {
+    const fetchSong = useCallback(
+        async (event: React.FormEvent<HTMLFormElement> | string) => {
+            if (typeof event !== 'string') {
+                event.preventDefault();
+            }
+            const songUrl = typeof event === 'string' ? event : url;
+            if (!songUrl || !validateUrl(songUrl)) {
+                setError('Please enter a valid Spotify song URL');
+                return;
+            }
+            setLoading(true);
+            const result = await fetch(`./getSong?url=${songUrl}`).catch(() => {
+                setLoading(false);
+                setError('Network error');
+            });
+            if (!result) return;
+            if (!result.ok) {
+                setError(
+                    `Error: ${result.status} ${
+                        result.statusText
+                    } - ${await result.text()}`
+                );
+                setLoading(false);
+                return;
+            }
+            const searchParams = new URLSearchParams(window.location.search);
+            searchParams.set('url', songUrl);
+            window.history.pushState(null, '', `?${searchParams.toString()}`);
+            const { title, author, cover } = await result.json();
+            setSong({ title, author, cover });
             setLoading(false);
-            setError('Network error');
-        });
-        if (!result) return;
-        if (!result.ok) {
-            setError(
-                `Error: ${result.status} ${
-                    result.statusText
-                } - ${await result.text()}`
-            );
-            setLoading(false);
-            return;
+        },
+        [url]
+    );
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(window.location.search);
+        if (searchParams.has('url')) {
+            const url = searchParams.get('url') as string;
+            setUrl(url);
+            fetchSong(url);
         }
-        const { title, author, cover } = await result.json();
-        setSong({ title, author, cover });
-        setLoading(false);
-    };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <main>
-            <form onSubmit={handleSubmit} role="search">
+            <form onSubmit={fetchSong} role="search">
                 <label className="url-input-label" htmlFor={searchInputId}>
                     Put a Spotify song URL here
                 </label>
@@ -67,6 +86,7 @@ export default function App() {
                         id={searchInputId}
                         className="url-input"
                         disabled={loading}
+                        name="search"
                         required
                     />
                     <button
