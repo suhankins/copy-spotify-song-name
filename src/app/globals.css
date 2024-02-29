@@ -16,6 +16,7 @@ html {
     color-scheme: dark;
     color: rgba(255, 255, 255, 0.87);
     background-color: #242424;
+    background-image: linear-gradient(to bottom, #1ed7605e 0%, #0ff0 30% 100%);
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
