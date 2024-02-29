@@ -21,10 +21,9 @@
     gap: 0.5rem;
 }
 
-.info * {
+.info > * {
     overflow-wrap: anywhere;
     max-width: 30rem;
-    display: flex;
     place-items: center;
     margin: 0;
 }
