@@ -1,4 +1,4 @@
-import { GithubLink } from './GithubLink/GithubLink';
+import { GithubLink } from './About/About';
 import './globals.css';
 
 export const metadata = {

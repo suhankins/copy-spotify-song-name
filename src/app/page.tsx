@@ -86,7 +86,7 @@ export default function App() {
                         id={searchInputId}
                         className="url-input"
                         disabled={loading}
-                        name="search"
+                        name="url"
                         required
                     />
                     <button
