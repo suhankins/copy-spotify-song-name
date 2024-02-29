@@ -3,7 +3,7 @@ import { CopyButton } from './CopyButton/CopyButton';
 import styles from './SongCard.module.css';
 
 export function SongCard({
-    imgSrc = 'https://via.placeholder.com/300x300?text=No+cover',
+    imgSrc = './nocover.png',
     title = 'No title',
     artist = 'No artist',
 }: {
